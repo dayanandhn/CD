@@ -1,18 +1,20 @@
 #include<bits/stdc++.h>
 
 using namespace std;
+// Symbol class represents a symbol and its attribute
 class Symbol
 {
     public:
     string id;
     string attr;
-    Symbol *next;
-    Symbol()
+    Symbol *next; // points to next symbol
+    Symbol() //constructor for initializing the next pointer to null
     {
         next = NULL;
     }
 };
 
+//To search an symbol in the table with its entry number in the table
 int id_search(Symbol* head, string key)
 {
     int ct = 0;
@@ -25,7 +27,8 @@ int id_search(Symbol* head, string key)
     return ct;
 }
 
-int id_exist(Symbol* head, string key)
+//To check if the symbol exist in the table (linked list)
+int id_exist(Symbol* head, string key) 
 {
     Symbol* current = head;
     while (current != NULL)
@@ -37,13 +40,14 @@ int id_exist(Symbol* head, string key)
     return 0;
 }
 
+// Insertt function appends the new nde with value to the given list
 void insertt(Symbol **head_ptr, string ids, string attrs)
 {
     Symbol *new_node = new Symbol();
     Symbol *last = *head_ptr;
-    int exist = 0;
+    int exist = 0; // To check whether the symbol already exist or not
     exist = id_exist(last, ids);
-    if(exist==1)
+    if(exist==1) //if exist return without appending
         return;
     new_node->id = ids;
     new_node->attr = attrs;
@@ -58,6 +62,7 @@ void insertt(Symbol **head_ptr, string ids, string attrs)
     return;
 }
 
+//disply the symbols in the table(list)
 void display(Symbol *head)
 {
     while(head!=NULL)
@@ -67,13 +72,14 @@ void display(Symbol *head)
     }
 }
 
+//TO check whether the passed string is an operator
 bool check_op(string value)
 {
     string operators[6] = {"*", "/", "+", "-", "%", "="};
-    vector<string> op;
-    op.insert(op.begin(), begin(operators), end(operators));
+    vector<string> op; // Operators array is vectorised
+    op.insert(op.begin(), begin(operators), end(operators)); //insert the values into the list using iterators
 
-    return find(op.begin(), op.end(), value) != op.end();
+    return find(op.begin(), op.end(), value) != op.end();//returns true or false
 }
 
 int main()
@@ -87,7 +93,7 @@ int main()
     int num;
     while(ss >> token)
     {
-        if(stringstream(token)>>num)
+        if(stringstream(token)>>num)//if number, continue numbers are not identifiers
             continue;
         if(!check_op(token))
             insertt(&head, token, "id");
